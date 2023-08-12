@@ -10,10 +10,18 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const IMG_STYLE = {
+  // marginTop: '3px',
+  // marginRight: '20px',
+};
+
 const NavigationBar = () => {
   return (
     <>
       <Box sx={{ textAlign: 'center', mt: 5, mb: 2 }}>
+        <Box sx={{ textAlign: 'flex-start', mt: 5, mb: 2 }}>
+          <img src="/wallet-62.svg" width="100" height="80" style={IMG_STYLE} />
+        </Box>
         <Typography variant="h3" gutterBottom>
           DIGITAL WALLET DASHBOARD
         </Typography>
