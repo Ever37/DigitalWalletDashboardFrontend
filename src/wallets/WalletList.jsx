@@ -76,7 +76,7 @@ const WalletList = () => {
   if (isEmpty(wallets)) return <Loading plain />
 
   return (
-    <Box sx={{ ml: '31.5%', mt: 40 }}>
+    <Box sx={{ ml: '31.5%', mt: 10 }}>
       <Grid item xs={12}>
         <SortWalletButton order={order} onClick={handleOrderClick} />
         <List

@@ -8,7 +8,7 @@ import Loading from '../common/Loading';
 const Layout = () => {
   return (
     <Box
-      display="flex"
+      // display="flex"
       justifyContent="center"
       alignItems="center"
       height="300px"

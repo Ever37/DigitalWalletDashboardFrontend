@@ -24,14 +24,14 @@ const WalletBalance = () => {
       setResult(response.balance);
       setResult({ error: 'success', msg: response.balance });
     } catch (error) {
-      setResult({ error: 'error', msg: error.message });
+      setResult({ error: 'error', msg: error?.response?.data?.message });
       console.error('getWalletBalance error:', error);
     }
   };
 
   return (
     <Box sx={{ ml: '37.5%' }}>
-      <Grid item xs={12} sx={{ mt: 20, mb: 5 }}>
+      <Grid item xs={12} sx={{ mt: 10, mb: 5 }}>
         <MyTextField
           id="address"
           label="Wallet Address"

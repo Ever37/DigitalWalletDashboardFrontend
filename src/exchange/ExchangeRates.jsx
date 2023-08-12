@@ -20,7 +20,7 @@ const ExchangeRates = () => {
         setEuroToEth(response.euroToEth.toString());
         setUsdToEth(response.usdToEth.toString());
       } catch (error) {
-        setResult({ error: 'error', msg: error.message });
+        setResult({ error: 'error', msg: error?.response?.data?.message });
         console.error('getExchangeRates error:', error);
       }
     }
@@ -33,14 +33,14 @@ const ExchangeRates = () => {
       await exchangeAPI.updateExchangeRate('usdToEth', parseFloat(usdToEth));
       setResult({ error: 'success', msg: 'Successfully updated' });
     } catch (error) {
-      setResult({ error: 'error', msg: error.message });
+      setResult({ error: 'error', msg: error?.response?.data?.message });
       console.error('Updating exchange rate error:', error);
     }
   };
 
   return (
     <Box sx={{ ml: '37.5%' }}>
-      <Grid item xs={12} sx={{ mt: 20, mb: 5 }}>
+      <Grid item xs={12} sx={{ mt: 10, mb: 5 }}>
         <MyTextField
           id="usd-eth"
           label="USD-ETH Exchange rate"
