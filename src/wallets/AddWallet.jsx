@@ -18,7 +18,6 @@ const AddWallet = () => {
       const response = await walletsAPI.addWallet({ address });
       setAddress(response);
       setResult({ error: 'success', msg: response });
-      navigate('/wallets');
     } catch (error) {
       setResult({ error: 'error', msg: error?.response?.data?.message });
       console.error('adding wallet error:', error);
