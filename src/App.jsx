@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavigationBar from './NavigationBar';
 import Layout from './layout/Layout';
 
 const WalletList = lazy(() => import('./wallets/WalletList'));
@@ -13,7 +12,6 @@ const NotFound = lazy(() => import('./common/NotFound'));
 function App() {
   return (
     <BrowserRouter>
-      <NavigationBar />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="wallets" element={<WalletList />} />
