@@ -15,6 +15,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import React, { useEffect, useState } from 'react';
 import Loading from '../common/Loading';
+import MyCopyButton from '../common/MyCopyButton';
 import { isEmpty } from '../utils/tools';
 import SortWalletButton from './SortWalletButton';
 import walletsAPI from './walletsAPI';
@@ -75,7 +76,7 @@ const WalletList = () => {
   if (isEmpty(wallets)) return <Loading plain />
 
   return (
-    <Box sx={{ ml: '30%', mt: 40 }}>
+    <Box sx={{ ml: '31.5%', mt: 40 }}>
       <Grid item xs={12}>
         <SortWalletButton order={order} onClick={handleOrderClick} />
         <List
@@ -92,16 +93,19 @@ const WalletList = () => {
               sx={{ border: 1, borderRadius: 1, mb: 1 }}
               alignItems="center"
               secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="favorite"
-                  onClick={() => handleToggleFavorite(wallet.address)}
-                >
-                  {
-                    wallet.isFavorite
-                      ? <StarIcon style={{ color: '#FFD700', fontSize: 30 }} />
-                      : <StarBorderIcon style={{ fontSize: 30 }} />}
-                </IconButton>
+                <>
+                  <MyCopyButton textToCopy={wallet.address} />
+                  <IconButton
+                    edge="end"
+                    aria-label="favorite"
+                    onClick={() => handleToggleFavorite(wallet.address)}
+                  >
+                    {
+                      wallet.isFavorite
+                        ? <StarIcon style={{ color: '#FFD700', fontSize: 30 }} />
+                        : <StarBorderIcon style={{ fontSize: 30 }} />}
+                  </IconButton>
+                </>
               }
             >
               <ListItemAvatar>

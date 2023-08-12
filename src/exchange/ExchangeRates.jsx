@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { useEffect, useState } from 'react';
 import MyButton from '../common/MyButton';
 import MyTextField from '../common/MyTextField';
+import { isNotEmpty } from '../utils/tools';
 import exchangeAPI from './exchange-ratesAPI';
 
 const ExchangeRates = () => {
   const [euroToEth, setEuroToEth] = useState('');
   const [usdToEth, setUsdToEth] = useState('');
+  const [result, setResult] = useState({ error: 'success', msg: '' });
 
   useEffect(() => {
     async function handleExchangeRates() {
@@ -18,15 +20,22 @@ const ExchangeRates = () => {
         setEuroToEth(response.euroToEth.toString());
         setUsdToEth(response.usdToEth.toString());
       } catch (error) {
-        console.error('getAllWallets error:', error);
+        setResult({ error: 'error', msg: error.message });
+        console.error('getExchangeRates error:', error);
       }
     }
     handleExchangeRates();
   }, [])
 
   const handleUpdateRates = async () => {
-    await exchangeAPI.updateExchangeRate('euroToEth', parseFloat(euroToEth));
-    await exchangeAPI.updateExchangeRate('usdToEth', parseFloat(usdToEth));
+    try {
+      await exchangeAPI.updateExchangeRate('euroToEth', parseFloat(euroToEth));
+      await exchangeAPI.updateExchangeRate('usdToEth', parseFloat(usdToEth));
+      setResult({ error: 'success', msg: 'Successfully updated' });
+    } catch (error) {
+      setResult({ error: 'error', msg: error.message });
+      console.error('Updating exchange rate error:', error);
+    }
   };
 
   return (
@@ -53,6 +62,16 @@ const ExchangeRates = () => {
           label="Update"
           onClick={handleUpdateRates}
         />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          visibility: isNotEmpty(result.msg) ? 'visible' : 'hidden'
+        }}>
+        <Alert severity={result.error}>{result.msg}</Alert>
       </Grid>
     </Box>
   );

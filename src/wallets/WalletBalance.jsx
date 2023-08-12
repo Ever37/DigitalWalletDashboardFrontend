@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Alert, AlertTitle, Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, { useState } from 'react';
 import MyButton from '../common/MyButton';
@@ -16,11 +16,17 @@ const CURRENCY_OPTIONS = Object.freeze([
 const WalletBalance = () => {
   const [address, setAddress] = useState('');
   const [currency, setCurrency] = useState('USD');
-  const [balance, setBalance] = useState(null);
+  const [result, setResult] = useState({ error: 'success', msg: '' });
 
   const handleGetBalance = async () => {
-    const response = await walletsAPI.getWalletBalance(address, currency);
-    setBalance(response.balance);
+    try {
+      const response = await walletsAPI.getWalletBalance(address, currency);
+      setResult(response.balance);
+      setResult({ error: 'success', msg: response.balance });
+    } catch (error) {
+      setResult({ error: 'error', msg: error.message });
+      console.error('getWalletBalance error:', error);
+    }
   };
 
   return (
@@ -49,11 +55,15 @@ const WalletBalance = () => {
           onClick={handleGetBalance}
         />
       </Grid>
-      <Grid item xs={12} sx={{ visibility: isNotEmpty(balance) ? 'visible' : 'hidden' }}>
-        <Alert severity="info">
-          <AlertTitle>Balance</AlertTitle>
-          <strong>{balance}</strong>
-        </Alert>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          visibility: isNotEmpty(result.msg) ? 'visible' : 'hidden'
+        }}>
+        <Alert severity={result.error}>{result.msg}</Alert>
       </Grid>
     </Box>
   );
